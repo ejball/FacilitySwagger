@@ -53,11 +53,11 @@ internal sealed class SwaggerParserContext
 				}
 			}
 
-			return (node.End.Line, node.End.Column);
+			return ((int) node.End.Line, (int) node.End.Column);
 		}
 		else
 		{
-			JToken token = JToken.Parse(m_serviceDefinitionText!.Text);
+			var token = JToken.Parse(m_serviceDefinitionText!.Text);
 
 			if (path != null && path.Length != 0)
 			{
@@ -73,7 +73,7 @@ internal sealed class SwaggerParserContext
 					token = childToken;
 				}
 			}
-			JToken pathToken = string.IsNullOrEmpty(path) ? token : token.SelectToken(ResolvePath(path)!)!;
+			var pathToken = string.IsNullOrEmpty(path) ? token : token.SelectToken(ResolvePath(path)!)!;
 
 			var lineInfo = (IJsonLineInfo) (pathToken ?? token);
 			return (lineInfo.LineNumber, lineInfo.LinePosition);
